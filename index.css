@@ -156,7 +156,7 @@ font-size: 35px;
     padding-bottom: 10px;
 }
 .name h2 .web{
-    color: aqua;
+    color: rgb(24, 2, 126);
     
 }
 .pic img{
@@ -434,7 +434,7 @@ padding-left: 1em;
         top: 100%;
         left: 0%;
         width: 100%;
-        background-color: beige;
+        background-color:white;
         border-top: o.1rem solid black;
         display: none;
     }
