@@ -1,0 +1,503 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+}
+html{
+    font-size: 62.5%;
+}
+.container{
+    max-width: 1500px;
+    padding: 2em ;
+    margin: 0% auto;
+    width: 100%;
+}
+ 
+
+header .container{  
+    margin: 0% auto;
+   z-index: 100;
+     left: 0%;
+   background:transparent;
+    padding-top: 2em;
+    
+    display: flex;
+    align-items:center;
+    justify-content: end;
+   
+   
+}
+.logo{
+    font-size: 2.5em;
+    color: var(--main-color);
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: auto
+    
+}
+.menu a{
+    position: relative;
+    text-transform: capitalize;
+    font-size: 1em;
+    color: rgb(12, 12, 12);
+    font-weight: 500;
+    margin-right: 3.5em;
+    font-size: 20px;
+}
+#menuicon{
+    font-size: 3.6em;
+    color: rgb(8, 8, 8);
+    display: none;
+}
+/* @media screen and (max-width:768px) {
+    header .container{
+        position: fixed;
+    }
+    #menuicon{
+        display: block;
+    }
+    html{
+        font-size: 62.5%;
+    }
+    .menu{
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        width: 100%;
+        background-color: beige;
+        border-top: o.1rem solid black;
+        display: none;
+    }
+    .menu.active{
+        display: block;
+    }
+    .menu a{
+        display: block;
+        font-size: 2em;
+        margin: 3rem 0;
+    }
+} */
+
+/* .container{
+    max-width: 1500px;
+    padding: 1em;
+    width: 100%;
+}
+
+header .container{
+   
+    margin: 0%;
+   z-index: 100;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: auto;
+   
+   
+}
+.logo{
+    font-size: 2.5em;
+   color: aqua;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: auto;
+}
+.menu a{
+   
+    text-transform: capitalize;
+    font-size: 1.7em;
+    color: rgb(12, 12, 12);
+    font-weight: 500;
+    margin-right: 3.5em;
+}
+#menuicon{
+    font-size: 3.6em;
+    color: rgb(8, 8, 8);
+    display: none;
+} */
+ .home{
+    padding-top: 2em;
+ }
+.home .container{
+    width: 100%;
+    margin: 0% auto;
+    
+    display: flex;
+    background-color: aliceblue;
+    box-sizing: border-box;
+    padding-top: 2em;
+    
+}
+.name{
+    justify-content:center;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+  
+}
+.name h1{
+align-items: start;
+font-family: Arial;
+font-size: 35px;
+
+}
+
+.name p{
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.name h2 .web{
+    color: aqua;
+    
+}
+.pic img{
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
+.name button{
+    border:none;
+    background-color: rgb(54, 54, 187);
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    border-radius:10px;
+    padding: 8px 10px;
+    margin-top: 1em;
+}
+.service .container{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    box-sizing: border-box;
+    background-color: white;
+}
+.border{
+    border: 8px solid rgb(72, 134, 150);
+    margin-top: 2em;
+    flex: 1;
+ 
+}
+.innerborder img{
+  position: relative;
+  top: -25px;
+  left: -15px;
+
+}
+.hello{
+    margin-top:2em;
+    flex: 3;
+}
+.hello p{
+    text-align: justify;
+    padding-bottom: 1em;
+}
+.details{
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    padding-bottom: 1em;
+    gap: 1em;
+}
+.details h6{
+    font-size: 20px;
+}
+.hello button{
+    border:none;
+    background-color: rgb(54, 54, 187);
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    border-radius:10px;
+    padding: 8px 10px;
+
+}
+.service1 .container{
+    width: 100%;
+    margin: 0% auto;
+}
+.qualify{
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+.school{
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ padding-top: 2em;
+}
+.school h2{
+font-size: 20px;
+padding-left: 1em;
+}
+.boreder,
+.border1
+{
+    box-sizing: border-box;
+    background-color: beige;
+    border-left: 2px solid blue;
+    width: 90%;
+}
+.sch,
+.master,
+.work,
+.shop{
+    border-bottom: 1px solid blue;
+    align-items: center;
+    padding-left: 2em;
+    font-size: 20px;
+    padding-top: 1em;
+  
+}
+.master,
+.shop{
+    border-bottom: none;
+}
+.sch h5, p,
+.master h5, p,
+.work h5, p,
+.shop h5, p{
+    padding-bottom: 1em;
+}
+.service2 .container{
+    width: 100%;
+    padding: 0% auto;
+}
+.skills{
+    font-size: 20px;
+    text-align: center;
+}
+.projects {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    width: 100%;
+    height: 50vh; /* Ensure the container takes full viewport height */
+    padding-top: 1em;
+    gap: 2em;
+ 
+}
+
+.housing,
+.camera,
+.timer,
+.machine{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%; /* Ensure the div takes the full width */
+    height: 100%; /* Ensure the div takes the full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    opacity: 0.5;
+}
+
+.housing{
+    background-image: url(house3.jpg);
+  
+}
+.machine{
+    background-image: url(machine.jpeg);
+}
+.timer{
+    background-image: url(time.jpg);
+}
+.camera{
+    background-image: url(camera3.jpg);
+}
+
+.housing a, 
+.machine a,
+.camera a,
+.timer a{
+    font-size: 36px;
+    color: black;
+}
+
+.housing p,
+.camera p,
+.machine p,
+.timer
+ {
+    color: white; /* Ensure text is readable on the background image */
+    font-size: 20px;
+}
+.housing:hover,
+.camera:hover,
+.timer:hover,
+.machine:hover{
+    cursor: pointer;
+    opacity: 3;
+    
+}
+.housing a:hover,
+.camera a:hover,
+.timer a:hover,
+.machine a:hover{
+    color: blue;
+}
+.service3 .container{
+    width: 100%;
+    margin: 0% auto;
+}
+.whatido{
+    font-size: 30px;
+    text-align: center;
+}
+.myservices{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 2em;
+    gap: 2em;
+}
+.works,
+.consultancy,
+.teaching{
+    border-radius: 10px;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.works i.bx,
+.consultancy i.bx,
+.teaching i.bx{
+    font-size: 36px;
+    padding-top: 1em;
+}
+.works h4,
+.consultancy h4,
+.teaching h4{
+    padding-bottom: 1em;
+}
+.works p,
+.consultancy p,
+.teaching p{
+    font-size: 20px;
+}
+
+
+@media screen and (max-width:991px) {
+    html{
+        font-size: 62.5%;
+    }
+    .menu a{
+        font-size: 10px;
+        
+    }
+   
+    .pic img{
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+
+    }
+    .name h1{
+        font-size: 20px;
+    }
+    
+}
+
+@media screen and (max-width:768px) {
+    header .container{
+        position: fixed;
+    }
+    #menuicon{
+        display: block;
+    }
+    html{
+        font-size: 62.5%;
+    }
+    .menu{
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        width: 100%;
+        background-color: beige;
+        border-top: o.1rem solid black;
+        display: none;
+    }
+    .menu.active{
+        display: block;
+    }
+    .menu a{
+        display: block;
+        font-size: 2em;
+        margin: 3rem 0;
+    }
+    .home .container{
+        margin-top: 4em;
+        flex-direction: column-reverse;
+    }
+    .pic img{
+        width: 100%;
+        height: 100%;
+    }
+    .service .container{
+        flex-direction: column;
+    }
+    .border{
+        width: 50%;
+    }
+    .innerborder img{
+        width: 100%;
+        height: 100%;
+    }
+    .school{
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2em;
+    }
+
+}
+@media  screen and (max-width:567px) {
+
+    .projects{
+        grid-template-columns: repeat(1, 1fr);
+    }
+     .housing,
+.camera,
+.timer,
+.machine{
+    border-radius: 10px;
+}
+    .housing a, 
+.machine a,
+.camera a,
+.timer a{
+    font-size: 20px;
+    color: black;
+}
+.housing p,
+.camera p,
+.machine p,
+.timer
+ {
+    color: white; /* Ensure text is readable on the background image */
+    font-size: 15px;
+}
+.myservices{
+    grid-template-columns: repeat(1, 1fr);
+}
+    
+}
