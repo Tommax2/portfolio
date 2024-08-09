@@ -23,7 +23,7 @@ header .container{
     margin: 0% auto;
    z-index: 100;
      left: 0%;
-   background:transparent;
+   background-color: white;
     padding-top: 2em;
     
     display: flex;
