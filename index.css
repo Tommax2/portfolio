@@ -144,6 +144,9 @@ header .container{
     flex-direction: column;
   
 }
+.social i.bx{
+    font-size: 30px;
+}
 .name h1{
 align-items: start;
 font-family: Arial;
@@ -152,7 +155,7 @@ font-size: 35px;
 }
 
 .name p{
-    font-size: 20px;
+   
     padding-bottom: 10px;
 }
 .name h2 .web{
@@ -471,6 +474,9 @@ padding-left: 1em;
 
 }
 @media  screen and (max-width:567px) {
+    .name p{
+   text-align: justify;
+    }
 
     .projects{
         grid-template-columns: repeat(1, 1fr);
