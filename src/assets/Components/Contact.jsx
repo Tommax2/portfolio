@@ -22,13 +22,14 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    let response = await fetch("https://portfolio-server-5soy.onrender.com", {
+    let response = await fetch("https://portfolio-server-5soy.onrender.com/contact", {
       method: "POST",
       headers: {
         "Content-Type": "Application/json;charset=utf-8",
       },
       body: JSON.stringify(formDetails),
     });
+
     setButtonText("Send");
     let result = await response.json();
     setFormDetails(FormInitialDetails);
