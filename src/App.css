@@ -472,7 +472,7 @@ text-decoration: none;
   align-items: center;
   font-size: 30px;
 }
-@media screen and (max-width:375px) {
+@media screen and (max-width:390px) {
   .project .nav.nav-pills .nav-link{
     font-size: 10px;
    
