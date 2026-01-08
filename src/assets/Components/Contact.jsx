@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../img/contact.jpeg";
+import { motion } from "framer-motion";
 
 export const Contact = () => {
   const FormInitialDetails = {
@@ -21,23 +22,41 @@ export const Contact = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!formDetails.email || !formDetails.message) {
+      setStatus({ success: false, message: "Please fill in all required fields." });
+      return;
+    }
+
     setButtonText("Sending...");
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send");
-    let result = response.json();
-    setFormDetails(FormInitialDetails);
-    if (result.code === 200) {
-      setStatus({ success: true, message: "Message sent sucessfully" });
-    } else {
+    try {
+      const response = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(formDetails),
+      });
+      
+      setButtonText("Send");
+      
+      if (response.ok) {
+        const result = await response.json();
+        setFormDetails(FormInitialDetails);
+        setStatus({ success: true, message: "Message sent successfully!" });
+      } else {
+        setStatus({
+          success: false,
+          message: "Server error. Please try again later.",
+        });
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setButtonText("Send");
       setStatus({
         success: false,
-        message: "Something went wrong please try again later",
+        message: "Connection failed. Is the backend server running?",
       });
     }
   };
@@ -46,11 +65,22 @@ export const Contact = () => {
       <Container>
         <Row className="align-items-center">
           <Col md={6}>
-            <img src={contactImg} alt="" />
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <img src={contactImg} alt="Contact Us" />
+            </motion.div>
           </Col>
           <Col md={6}>
-            <h2>Get In Touch</h2>
-            <form onSubmit={handleSubmit}>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2>Get In Touch</h2>
+              <form onSubmit={handleSubmit}>
               <Row className="mt-3">
                 <Col md={6}>
                   <input
@@ -111,20 +141,21 @@ export const Contact = () => {
                 </Col>
               </Row>
 
-              {status.message && (
-                <Row className="mt-3">
-                  <Col md={12}>
-                    <p
-                      className={
-                        status.success === false ? "danger" : "success"
-                      }
-                    >
-                      {status.message}
-                    </p>
-                  </Col>
-                </Row>
-              )}
-            </form>
+                {status.message && (
+                  <Row className="mt-3">
+                    <Col md={12}>
+                      <p
+                        className={
+                          status.success === false ? "danger" : "success"
+                        }
+                      >
+                        {status.message}
+                      </p>
+                    </Col>
+                  </Row>
+                )}
+              </form>
+            </motion.div>
           </Col>
         </Row>
       </Container>

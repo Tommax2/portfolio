@@ -2,6 +2,7 @@ import { Tab } from "react-bootstrap";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import { Camera } from "react-bootstrap-icons";
 import { ProjectCards } from "./ProjectCards";
+import { motion } from "framer-motion";
 import  House  from "../img/house3.jpg";
 import Time from "../img/time.jpg";
 import camera3 from "../img/camera3.jpg";
@@ -16,12 +17,7 @@ export const Projects = () => {
       imgUrl: House,
       url:"https://tommax2.github.io/house/"
     },
-    {
-      title: "TImer",
-      description: "Design and Development",
-      imgUrl: Time,
-      url:"https://tommax2.github.io/timer/",
-    },
+  
     {
       title: "Business Startup",
       description: "Design and Development",
@@ -47,8 +43,14 @@ export const Projects = () => {
       <Container>
         <Row>
           <Col>
-            <h2>Projects</h2>
-            <p>Little of my projects</p>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2>Featured Projects</h2>
+              <p>Explore a selection of my recent work, showcasing my expertise in building robust, scalable, and visually stunning web applications. Each project represents a unique challenge solved with modern technology.</p>
+            </motion.div>
             <Tab.Container id="projects-tabs" defaultActiveKey="first">
             <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-item-center" id="pills-tab">
               <Nav.Item>
@@ -57,14 +59,23 @@ export const Projects = () => {
               <Nav.Item>
                 <Nav.Link eventKey="second">Tab two</Nav.Link>
               </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="third" >
-                  Tab three
-                </Nav.Link>
-              </Nav.Item>
+              
+             
             </Nav>
             <Tab.Content>
                 <Tab.Pane eventKey ="first">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.2
+                      }
+                    }
+                  }}
+                >
                 <Row>
   {projects.map((project, index) => {
     return (
@@ -72,11 +83,14 @@ export const Projects = () => {
     );
   })}
 </Row>
-
+                </motion.div>
                 </Tab.Pane>
-                <Tab.Pane eventKey = "second">lorem</Tab.Pane>
-                <Tab.Pane eventKey ="third">lorem</Tab.Pane>
-
+                <Tab.Pane eventKey="second">
+                  <p>More projects coming soon. Stay tuned for updates on my latest ventures and technical explorations.</p>
+                </Tab.Pane>
+                <Tab.Pane eventKey="third">
+                  <p>I am always open to new opportunities and collaborations. If you have a project in mind, feel free to reach out!</p>
+                </Tab.Pane>
             </Tab.Content>
             </Tab.Container>
           </Col>

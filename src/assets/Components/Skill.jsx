@@ -2,11 +2,9 @@ import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import meter1 from '../img/percent85.jpg';
+import { motion } from "framer-motion";
+import { FaCode, FaPaintBrush, FaMobileAlt, FaDatabase, FaChartLine, FaServer } from "react-icons/fa";
 
-import meter2 from '../img/percent85.jpg';
-import meter4 from '../img/percent85.jpg';
-import meter5 from '../img/percent95.jpg';
 export const Skill = () => {
 
     const responsive = {
@@ -29,61 +27,85 @@ export const Skill = () => {
         }
       };
 
-    return(
+    return (
         <section className='skill' id='Skill'>
             <Container>
                 <Row>
                     <Col>
-                    <div className='skill-bx'>
-
-                        <h2>
-                            Skills
-                        </h2>
-                        <p>Here are some of my skils </p>
-                        <Carousel responsive={responsive} infinite={true} className='skill-slider'>
+                        <motion.div
+                            className='skill-bx'
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <h2>Technical Proficiency</h2>
+                            <p>I possess a diverse set of technical skills, ranging from front-end development to back-end architecture. I am constantly learning and adapting to new technologies to deliver high-quality, scalable results.</p>
+                            <Carousel responsive={responsive} infinite={true} className='skill-slider'>
                                
-                            <div className='item'>
-                            <img src={meter4} alt="meter" />
-                            <h5>Web DEVELOPMENT</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaCode size={80} color="#aa367c" />
+                                <h5>WEB DEVELOPMENT</h5>
+                            </motion.div>
                             
                                  
-                            <div className='item'>
-                            <img src={meter2} alt="meter" />
-                            <h5>Web DESIGN</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaPaintBrush size={80} color="#4a2fbd" />
+                                <h5>WEB DESIGN</h5>
+                            </motion.div>
 
      
-                            <div className='item'>
-                            <img src={meter4} alt="meter" />
-                            <h5>UI/UX DESIGN</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaMobileAlt size={80} color="#aa367c" />
+                                <h5>UI/UX DESIGN</h5>
+                            </motion.div>
 
      
-                            <div className='item'>
-                            <img src={meter5} alt="meter" />
-                            <h5>FONTTEND DEVLOPMENT</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaDatabase size={80} color="#4a2fbd" />
+                                <h5>FRONTEND DEVELOPMENT</h5>
+                            </motion.div>
 
      
-                            <div className='item'>
-                            <img src={meter4} alt="meter" />
-                            <h5>CRYPTO ANALYSIS</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaChartLine size={80} color="#aa367c" />
+                                <h5>DATA ANALYST</h5>
+                            </motion.div>
 
-                            <div className='item'>
-                            <img src={meter1} alt="meter" />
-                            <h5>BACKTEND DEVELOPMENT</h5>
-                            </div>
+                            <motion.div 
+                                className='item'
+                                whileHover={{ rotateY: 20, rotateX: 10, scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <FaServer size={80} color="#4a2fbd" />
+                                <h5>BACKEND DEVELOPMENT</h5>
+                            </motion.div>
 
 
-                       </Carousel>
-                    </div>
+                            </Carousel>
+                        </motion.div>
                     </Col>
                 </Row>
             </Container>
-
         </section>
     )
 }
-

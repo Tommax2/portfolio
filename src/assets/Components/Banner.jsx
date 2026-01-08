@@ -1,8 +1,9 @@
-import { Container, Row , Col} from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import { ArrowRightCircle } from "react-bootstrap-icons"
 import Port1 from '../img/port1.jpg'
 import { useEffect, useState } from "react"
-    
+import { motion } from "framer-motion"
+
 export const Banner = () => {
     const [loopNum, setLoopNum] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -44,24 +45,50 @@ export const Banner = () => {
       }
     };
   
-    return(
+    return (
         <section className="banner" id="home">
             <Container>
                 <Row className="align-items-center">
                     <Col xs={12} md={6} xl={7}>
-                    <span className="tagline">Welcome to my portfolio</span>
-                    <h1>{'Hi I`m Martins'} <span className="wrap">{text}</span></h1>
-                    <p>I grew up in kogi state,Nigeria And i have a great passion to do code since when i was little i do pick interest in online activites and love tech,here are some details to get in touch with me or know more about me </p>
-                     <button onClick={()=> console.log('connect')}>
-                        let's connect < ArrowRightCircle  size ={25}/>
-                     </button>
+                        <motion.div
+                            initial={{ opacity: 0, x: -100 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <span className="tagline">Welcome to my portfolio</span>
+                            <h1>{'Hi, I`m Martins'} <span className="wrap">{text}</span></h1>
+                            <p>I am a dedicated    Developer with a passion for building innovative digital solutions. With expertise in modern web technologies, I transform complex ideas into elegant, user-centric applications. Explore my work and let's build something amazing together.</p>
+                            <button onClick={() => console.log('connect')}>
+                                let's connect <ArrowRightCircle size={25} />
+                            </button>
+                        </motion.div>
                     </Col>
                     <Col xs={12} md={6} xl={5}>
-                    <img src={Port1} alt="" />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <motion.img 
+                                src={Port1} 
+                                alt="Header Img" 
+                                animate={{
+                                    y: [0, -20, 0],
+                                    rotateZ: [0, 5, 0],
+                                    rotateX: [0, 10, 0],
+                                    perspective: 1000
+                                }}
+                                transition={{
+                                    duration: 5,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                                style={{ transformStyle: "preserve-3d" }}
+                            />
+                        </motion.div>
                     </Col>
                 </Row>
             </Container>
-
         </section>
     )
         
@@ -69,8 +96,3 @@ export const Banner = () => {
         
 
     }
-
-
-
-
-

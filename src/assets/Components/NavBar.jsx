@@ -3,22 +3,22 @@ import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import navIcon1 from '../img/github.jpg';
-import navIcon2 from '../img/linkdelin.jpg';
-import navIcon3 from '../img/whatapp.png';
+import { FaGithub, FaLinkedin, FaWhatsapp, FaFacebook } from 'react-icons/fa';
+
 export const NavBar = () =>{
-    const {activeLink,setActiveLink} = useState('home');
-    const {scrolled, setScrcolled} = useState(false);
+    const [activeLink, setActiveLink] = useState('home');
+    const [scrolled, setScrolled] = useState(false);
+
      useEffect(() =>{
        const onScroll = () =>{
-         if (window.scrollY > $0){
-            setScrcolled(true);
+         if (window.scrollY > 50){
+            setScrolled(true);
          } else{
-            setScrcolled(false);
+            setScrolled(false);
          }
        }
-       window.addEventListener("scroll",onscroll);
-       return () => window.removeEventListener('scroll',onScroll);
+       window.addEventListener("scroll", onScroll);
+       return () => window.removeEventListener('scroll', onScroll);
      },[])
      const  onUpdateActiveLink = (value) => {
       setActiveLink(value);
@@ -41,9 +41,10 @@ export const NavBar = () =>{
             
             <span className="navbar-text">
                 <div className='social-icon'>
-                    <a href="https://github.com/Tommax2"><img src={navIcon1} alt="" /></a>
-                    <a href="https://www.linkedin.com/in/martins-olumi-9b6b07317?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><img src={navIcon2} alt=""/></a>
-                    <a href="https://wa.me/2348110736175"><img src={navIcon3} alt="" /></a>
+                    <a href="https://github.com/Tommax2"><FaGithub color="white" size={20} /></a>
+                    <a href="https://www.linkedin.com/in/martins-olumi-9b6b07317?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><FaLinkedin color="white" size={20} /></a>
+                    <a href="https://wa.me/2348110736175"><FaWhatsapp color="white" size={20} /></a>
+                    <a href="#"><FaFacebook color="white" size={20} /></a>
                 </div>
                 <button className='vvd' onClick={() => console.log('connect')}><span>Let's connect</span></button>
             </span>

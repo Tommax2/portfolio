@@ -86,9 +86,9 @@ body{
   font-weight: 400;
   overflow-x: hidden;
   position: relative;
-  background-color:#181818  ;
+  background-color:#121212;
   color: #fff;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Inter', sans-serif;
 }
 h1,h2,h3,h4,h5,h6{
   padding: 0;
