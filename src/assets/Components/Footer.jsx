@@ -6,7 +6,7 @@ export const Footer = () => {
     <footer className="footer">
       <Container>
         <Row className="align-items-center">
-          <Col sm={6}>
+          <Col sm={6} className="text-center text-sm-start">
             <span className='logo'>TOMMAX</span>
           </Col>
           <Col sm={6} className="text-center text-sm-end">

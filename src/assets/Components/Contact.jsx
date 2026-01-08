@@ -79,7 +79,8 @@ export const Contact = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2>Get In Touch</h2>
+              <h2>Let's Collaborate</h2>
+              <p className="mb-4">Have a project in mind or just want to say hi? My inbox is always open. I'll get back to you as soon as possible!</p>
               <form onSubmit={handleSubmit}>
               <Row className="mt-3">
                 <Col md={6}>

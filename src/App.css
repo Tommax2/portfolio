@@ -293,6 +293,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon{
   font-size: 45px;
   font-weight: 700;
   text-align: center;
+  color: white;
 }
 .project p{
   color: #888888;
@@ -520,10 +521,15 @@ text-decoration: none;
 
 
 }
-.footer .logo{
-  display: flex;
-  align-items: center;
-  font-size: 30px;
+.footer .logo {
+  display: inline-block;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(90.21deg, #aa367c -5.91%, #4a2fbd 111.58%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 @media screen and (max-width: 992px) {
   .banner h1 {

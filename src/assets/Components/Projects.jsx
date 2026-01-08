@@ -15,26 +15,34 @@ export const Projects = () => {
       title: "Business Startup",
       description: "Design and Development",
       imgUrl: House,
-      url:"https://tommax2.github.io/house/"
-    },
-  
-    {
-      title: "Business Startup",
-      description: "Design and Development",
-      imgUrl: camera3,
-      url:"https://tommax2.github.io/camera/",
+      url: "https://tommax2.github.io/house/"
     },
     {
-      title: "Engineer Startup",
-      description: "Design and Development",
-      imgUrl: Machine,
-      url:"https://tommax2.github.io/Engineering-website-/",
+      title: "Timer App",
+      description: "Productivity Tool",
+      imgUrl: Time,
+      url: "https://tommax2.github.io/timer/",
     },
     {
-      title: "E-commerce",
-      description: "Design and Development",
+      title: "E-commerce Platform",
+      description: "Full-stack Solution",
       imgUrl: background,
       url: "https://everythingbybecky.onrender.com",
+    },
+  ];
+
+  const designProjects = [
+    {
+      title: "Photography Portfolio",
+      description: "UI/UX Design",
+      imgUrl: camera3,
+      url: "https://tommax2.github.io/camera/",
+    },
+    {
+      title: "Industrial Landing Page",
+      description: "Web Design",
+      imgUrl: Machine,
+      url: "https://tommax2.github.io/Engineering-website-/",
     },
   ];
 
@@ -54,13 +62,14 @@ export const Projects = () => {
             <Tab.Container id="projects-tabs" defaultActiveKey="first">
             <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-item-center" id="pills-tab">
               <Nav.Item>
-                <Nav.Link eventKey="first">Tab one</Nav.Link>
+                <Nav.Link eventKey="first">Web Apps</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="second">Tab two</Nav.Link>
+                <Nav.Link eventKey="second">UI/UX Design</Nav.Link>
               </Nav.Item>
-              
-             
+              <Nav.Item>
+                <Nav.Link eventKey="third">Future Projects</Nav.Link>
+              </Nav.Item>
             </Nav>
             <Tab.Content>
                 <Tab.Pane eventKey ="first">
@@ -86,7 +95,26 @@ export const Projects = () => {
                 </motion.div>
                 </Tab.Pane>
                 <Tab.Pane eventKey="second">
-                  <p>More projects coming soon. Stay tuned for updates on my latest ventures and technical explorations.</p>
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.2
+                        }
+                      }
+                    }}
+                  >
+                    <Row>
+                      {designProjects.map((project, index) => {
+                        return (
+                          <ProjectCards key={index} {...project} />
+                        );
+                      })}
+                    </Row>
+                  </motion.div>
                 </Tab.Pane>
                 <Tab.Pane eventKey="third">
                   <p>I am always open to new opportunities and collaborations. If you have a project in mind, feel free to reach out!</p>
