@@ -46,9 +46,10 @@ export const Contact = () => {
         setFormDetails(FormInitialDetails);
         setStatus({ success: true, message: "Message sent successfully!" });
       } else {
+        const result = await response.json();
         setStatus({
           success: false,
-          message: "Server error. Please try again later.",
+          message: result.message || "Server error. Please try again later.",
         });
       }
     } catch (error) {
