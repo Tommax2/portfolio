@@ -4,28 +4,29 @@ import { Camera } from "react-bootstrap-icons";
 import { ProjectCards } from "./ProjectCards";
 import { motion } from "framer-motion";
 import  House  from "../img/house3.jpg";
-import Time from "../img/time.jpg";
+import Jais from "../img/logo.jpeg";
 import camera3 from "../img/camera3.jpg";
 import Machine from "../img/machine.jpeg";
 import background from "../img/background.jpg";
+import Books from "../img/kids-books.jpg"
 
 export const Projects = () => {
   const projects = [
     {
-      title: "Business Startup",
-      description: "Design and Development",
-      imgUrl: House,
-      url: "https://tommax2.github.io/house/"
+      title: "TheTransformedmeacdamy",
+      description: "an e-commerce online store for selling books and get them delivered to your doorstep quickly.",
+      imgUrl: Books,
+      url: "https://thetransformedmeacademy.com",
     },
     {
-      title: "Timer App",
-      description: "Productivity Tool",
-      imgUrl: Time,
-      url: "https://tommax2.github.io/timer/",
+      title: "jaistechworld",
+      description: "a  portfolio website showcasing projects and skills about the company.",
+      imgUrl: Jais,
+      url: "https://jaistechworld.com",
     },
     {
-      title: "E-commerce Platform",
-      description: "Full-stack Solution",
+      title: "Everythingbybecky",
+      description: "an e-commerce online store for selling nairs and other beauty products.",
       imgUrl: background,
       url: "https://everythingbybecky.onrender.com",
     },
@@ -33,13 +34,13 @@ export const Projects = () => {
 
   const designProjects = [
     {
-      title: "Photography Portfolio",
+      title: "camera design demo",
       description: "UI/UX Design",
       imgUrl: camera3,
       url: "https://tommax2.github.io/camera/",
     },
     {
-      title: "Industrial Landing Page",
+      title: "Industrial Landing Page demo",
       description: "Web Design",
       imgUrl: Machine,
       url: "https://tommax2.github.io/Engineering-website-/",

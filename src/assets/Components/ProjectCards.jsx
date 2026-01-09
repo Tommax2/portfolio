@@ -15,20 +15,17 @@ export const ProjectCards = ({ title, description, imgUrl, url }) => {
     <Col sm={6} md={4}>
       <motion.div
         variants={cardVariants}
-        className="proj-imgbx"
-        whileHover={{ 
-          scale: 1.05,
-          rotateY: 15,
-          rotateX: 5,
-          perspective: 1000
-        }}
+        className="project-card-wrapper"
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
-        style={{ transformStyle: "preserve-3d" }}
       >
-        <img src={imgUrl} alt={title} />
+        <div className="proj-imgbx">
+          <img src={imgUrl} alt={title} />
+        </div>
         <div className="proj-txtx">
-          <a href={url} target="_blank" rel="noreferrer">{title}</a><br></br>
-          <span>{description}</span>
+          <h4>{title}</h4>
+          <p>{description}</p>
+          <a href={url} target="_blank" rel="noreferrer" className="view-project-link">View Project</a>
         </div>
       </motion.div>
     </Col>
