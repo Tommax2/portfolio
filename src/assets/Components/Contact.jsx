@@ -22,25 +22,33 @@ export const Contact = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formDetails.email || !formDetails.message) {
-      setStatus({ success: false, message: "Please fill in all required fields." });
+      setStatus({
+        success: false,
+        message: "Please fill in all required fields.",
+      });
       return;
     }
 
     setButtonText("Sending...");
     try {
-      const response = await fetch("https://portfolio-server-5soy.onrender.com/contact", {
+      const apiUrl =
+        window.location.hostname === "localhost"
+          ? "http://localhost:5000/contact"
+          : "https://portfolio-server-5soy.onrender.com/contact";
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify(formDetails),
       });
-      
+
       setButtonText("Send");
-      
+
       if (response.ok) {
         const result = await response.json();
         setFormDetails(FormInitialDetails);
@@ -81,67 +89,72 @@ export const Contact = () => {
               transition={{ duration: 0.8 }}
             >
               <h2>Let's Collaborate</h2>
-              <p className="mb-4">Have a project in mind or just want to say hi? My inbox is always open. I'll get back to you as soon as possible!</p>
+              <p className="mb-4">
+                Have a project in mind or just want to say hi? My inbox is
+                always open. I'll get back to you as soon as possible!
+              </p>
               <form onSubmit={handleSubmit}>
-              <Row className="mt-3">
-                <Col md={6}>
-                  <input
-                    type="text"
-                    value={formDetails.firstname}
-                    placeholder="First Name"
-                    onChange={(e) => onFormUpdate("firstname", e.target.value)}
-                  />
-                </Col>
-                <Col md={6}>
-                  <input
-                    type="text"
-                    value={formDetails.lastname}
-                    placeholder="Last Name"
-                    onChange={(e) => onFormUpdate("lastname", e.target.value)}
-                  />
-                </Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col md={6}>
+                    <input
+                      type="text"
+                      value={formDetails.firstname}
+                      placeholder="First Name"
+                      onChange={(e) =>
+                        onFormUpdate("firstname", e.target.value)
+                      }
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <input
+                      type="text"
+                      value={formDetails.lastname}
+                      placeholder="Last Name"
+                      onChange={(e) => onFormUpdate("lastname", e.target.value)}
+                    />
+                  </Col>
+                </Row>
 
-              <Row className="mt-3">
-                <Col md={12}>
-                  <input
-                    type="email"
-                    value={formDetails.email}
-                    placeholder="Email Address"
-                    onChange={(e) => onFormUpdate("email", e.target.value)}
-                  />
-                </Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col md={12}>
+                    <input
+                      type="email"
+                      value={formDetails.email}
+                      placeholder="Email Address"
+                      onChange={(e) => onFormUpdate("email", e.target.value)}
+                    />
+                  </Col>
+                </Row>
 
-              <Row className="mt-3">
-                <Col md={12}>
-                  <input
-                    type="tel"
-                    value={formDetails.phone}
-                    placeholder="Phone Number"
-                    onChange={(e) => onFormUpdate("phone", e.target.value)}
-                  />
-                </Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col md={12}>
+                    <input
+                      type="tel"
+                      value={formDetails.phone}
+                      placeholder="Phone Number"
+                      onChange={(e) => onFormUpdate("phone", e.target.value)}
+                    />
+                  </Col>
+                </Row>
 
-              <Row className="mt-3">
-                <Col md={12}>
-                  <textarea
-                    rows="6"
-                    value={formDetails.message}
-                    placeholder="Message"
-                    onChange={(e) => onFormUpdate("message", e.target.value)}
-                  />
-                </Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col md={12}>
+                    <textarea
+                      rows="6"
+                      value={formDetails.message}
+                      placeholder="Message"
+                      onChange={(e) => onFormUpdate("message", e.target.value)}
+                    />
+                  </Col>
+                </Row>
 
-              <Row className="mt-3">
-                <Col md={12}>
-                  <button type="submit">
-                    <span>{buttonText}</span>
-                  </button>
-                </Col>
-              </Row>
+                <Row className="mt-3">
+                  <Col md={12}>
+                    <button type="submit">
+                      <span>{buttonText}</span>
+                    </button>
+                  </Col>
+                </Row>
 
                 {status.message && (
                   <Row className="mt-3">
