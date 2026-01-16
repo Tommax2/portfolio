@@ -31,9 +31,10 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-// Email configuration
+// Email configuration for Brevo (formerly Sendinblue)
 const contactEmail = createTransport({
-    service: 'gmail',
+    host: "smtp-relay.brevo.com",
+    port: 587,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
@@ -67,8 +68,8 @@ app.post("/contact", (req, res) => {
         const name = `${firstname || ''} ${lastname || ''}`.trim() || "Unknown Sender";
         
         const mail = {
-            from: process.env.EMAIL_USER, // Use the authenticated email as 'from'
-            to: process.env.EMAIL_USER,
+            from: process.env.SENDER_EMAIL || process.env.EMAIL_USER,
+            to: process.env.SENDER_EMAIL || process.env.EMAIL_USER,
             replyTo: email,
             subject: `Contact Form Submission from ${name}`,
             html: `<p><strong>Name:</strong> ${name}</p>

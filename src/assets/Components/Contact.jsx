@@ -123,18 +123,13 @@ export const Contact = () => {
             ? "http://localhost:5000/contact"
             : "/contact";
 
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
-
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formDetails),
-          signal: controller.signal,
         });
-        clearTimeout(timeoutId);
 
         const result = await response.json();
         
