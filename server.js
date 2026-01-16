@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import { createTransport } from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config();
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -30,19 +33,14 @@ app.get("/", (req, res) => {
 
 // Email configuration
 const contactEmail = createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: 'gmail',
     auth: {
-        user: "martinsolumi@gmail.com",
-        pass: "pkgb hzlc dgkp kpzf"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     },
     tls: {
         rejectUnauthorized: false
-    },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 10000,
-    socketTimeout: 10000
+    }
 });
 
 contactEmail.verify((error) => {
@@ -71,8 +69,8 @@ app.post("/contact", (req, res) => {
         const name = `${firstname || ''} ${lastname || ''}`.trim() || "Unknown Sender";
         
         const mail = {
-            from: "martinsolumi@gmail.com", // Use the authenticated email as 'from'
-            to: "martinsolumi@gmail.com",
+            from: process.env.EMAIL_USER, // Use the authenticated email as 'from'
+            to: process.env.EMAIL_USER,
             replyTo: email,
             subject: `Contact Form Submission from ${name}`,
             html: `<p><strong>Name:</strong> ${name}</p>
