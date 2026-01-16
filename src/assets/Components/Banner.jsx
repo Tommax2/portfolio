@@ -72,6 +72,7 @@ export const Banner = () => {
                             <motion.img 
                                 src={Port1} 
                                 alt="Header Img" 
+                                loading="lazy"
                                 animate={{
                                     y: [0, -20, 0],
                                     rotateZ: [0, 5, 0],

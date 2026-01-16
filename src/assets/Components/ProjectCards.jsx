@@ -20,7 +20,7 @@ export const ProjectCards = ({ title, description, imgUrl, url }) => {
         transition={{ duration: 0.3 }}
       >
         <div className="proj-imgbx">
-          <img src={imgUrl} alt={title} />
+          <img src={imgUrl} alt={title} loading="lazy" />
         </div>
         <div className="proj-txtx">
           <h4>{title}</h4>
