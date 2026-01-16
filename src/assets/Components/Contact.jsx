@@ -13,13 +13,16 @@ export const Contact = () => {
   };
   const [formDetails, setFormDetails] = useState(FormInitialDetails);
   const [buttonText, setButtonText] = useState("Send");
+  const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState({});
+
   const onFormUpdate = (category, value) => {
     setFormDetails({
       ...formDetails,
       [category]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,6 +36,7 @@ export const Contact = () => {
     }
 
     setButtonText("Sending...");
+    setIsSending(true);
     try {
       const apiUrl =
         window.location.hostname === "localhost"
@@ -41,7 +45,7 @@ export const Contact = () => {
 
       // Add a timeout to the fetch request
       const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout
+      const timeoutId = setTimeout(() => controller.abort("Timeout"), 60000); // 60 seconds timeout
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -51,9 +55,10 @@ export const Contact = () => {
         body: JSON.stringify(formDetails),
         signal: controller.signal,
       });
-      clearTimeout(id);
+      clearTimeout(timeoutId);
 
       setButtonText("Send");
+      setIsSending(false);
 
       const result = await response.json();
       if (response.ok) {
@@ -68,7 +73,9 @@ export const Contact = () => {
     } catch (error) {
       console.error("Fetch error:", error);
       setButtonText("Send");
-      if (error.name === 'AbortError') {
+      setIsSending(false);
+      
+      if (error.name === 'AbortError' || error === 'Timeout') {
         setStatus({
           success: false,
           message: "Request timed out. The server might be waking up (Render free tier). Please try again in a minute.",
@@ -81,6 +88,7 @@ export const Contact = () => {
       }
     }
   };
+
   return (
     <section className="contact" id="connect">
       <Container>
@@ -162,7 +170,7 @@ export const Contact = () => {
 
                 <Row className="mt-3">
                   <Col md={12}>
-                    <button type="submit">
+                    <button type="submit" disabled={isSending}>
                       <span>{buttonText}</span>
                     </button>
                   </Col>
