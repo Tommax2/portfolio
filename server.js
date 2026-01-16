@@ -40,35 +40,53 @@ contactEmail.verify((error) => {
 
 // Contact form endpoint
 app.post("/contact", (req, res) => {
-    console.log("Received contact request:", req.body);
-    
-    const { firstname, lastname, email, message, phone } = req.body;
-    const name = `${firstname || ''} ${lastname || ''}`.trim() || "Unknown Sender";
-    
-    const mail = {
-        from: "Portfolio Contact Form <martinsolumi@gmail.com>",
-        to: "martinsolumi@gmail.com",
-        replyTo: email,
-        subject: `Contact Form Submission from ${name}`,
-        html: `<p><strong>Name:</strong> ${name}</p>
-               <p><strong>Email:</strong> ${email}</p>
-               <p><strong>Phone:</strong> ${phone}</p>
-               <p><strong>Message:</strong></p>
-               <p>${message}</p>`
-    };
-
-    contactEmail.sendMail(mail, (error) => {
-        if (error) {
-            console.error("Error sending email:", error);
-            return res.status(500).json({ 
-                code: 500, 
+    try {
+        console.log("Received contact request:", req.body);
+        
+        const { firstname, lastname, email, message, phone } = req.body;
+        
+        if (!email || !message) {
+            return res.status(400).json({ 
+                code: 400, 
                 status: "Error", 
-                message: error.message 
+                message: "Email and message are required" 
             });
         }
-        console.log("Email sent successfully");
-        res.json({ code: 200, status: "Message Sent" });
-    });
+
+        const name = `${firstname || ''} ${lastname || ''}`.trim() || "Unknown Sender";
+        
+        const mail = {
+            from: "martinsolumi@gmail.com", // Use the authenticated email as 'from'
+            to: "martinsolumi@gmail.com",
+            replyTo: email,
+            subject: `Contact Form Submission from ${name}`,
+            html: `<p><strong>Name:</strong> ${name}</p>
+                   <p><strong>Email:</strong> ${email}</p>
+                   <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+                   <p><strong>Message:</strong></p>
+                   <p>${message}</p>`
+        };
+
+        contactEmail.sendMail(mail, (error) => {
+            if (error) {
+                console.error("Error sending email:", error);
+                return res.status(500).json({ 
+                    code: 500, 
+                    status: "Error", 
+                    message: "Failed to send email. " + error.message 
+                });
+            }
+            console.log("Email sent successfully");
+            res.json({ code: 200, status: "Message Sent" });
+        });
+    } catch (err) {
+        console.error("Server error:", err);
+        res.status(500).json({ 
+            code: 500, 
+            status: "Error", 
+            message: "Internal server error: " + err.message 
+        });
+    }
 });
 
 const PORT = process.env.PORT || 5000;

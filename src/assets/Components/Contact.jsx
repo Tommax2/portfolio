@@ -42,19 +42,18 @@ export const Contact = () => {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json;charset=utf-8",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formDetails),
       });
 
       setButtonText("Send");
 
+      const result = await response.json();
       if (response.ok) {
-        const result = await response.json();
         setFormDetails(FormInitialDetails);
         setStatus({ success: true, message: "Message sent successfully!" });
       } else {
-        const result = await response.json();
         setStatus({
           success: false,
           message: result.message || "Server error. Please try again later.",
