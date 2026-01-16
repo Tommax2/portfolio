@@ -35,10 +35,14 @@ app.get("/", (req, res) => {
 const contactEmail = createTransport({
     host: "smtp-relay.brevo.com",
     port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    connectionTimeout: 15000, // 15 seconds
+    greetingTimeout: 15000,
+    socketTimeout: 15000,
 });
 
 // Email verification
@@ -52,8 +56,9 @@ contactEmail.verify((error) => {
 
 // Contact form endpoint
 app.post("/contact", (req, res) => {
+    console.log("POST /contact request received");
     try {
-        console.log("Received contact request:", req.body);
+        console.log("Request body:", JSON.stringify(req.body));
         
         const { firstname, lastname, email, message, phone } = req.body;
         

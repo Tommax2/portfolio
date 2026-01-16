@@ -118,17 +118,23 @@ export const Contact = () => {
           message: `Sending your message... (attempt ${attempt})`
         });
 
+        // Use absolute URL for production to help with protocol stability
         const apiUrl =
           window.location.hostname === "localhost"
             ? "http://localhost:5000/contact"
-            : "/contact";
+            : `${window.location.origin}/contact`;
+
+        console.log(`Attempting to send message to ${apiUrl} (attempt ${attempt})`);
 
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(formDetails),
+          // keepalive: true, // Ensure request completes
+          cache: 'no-cache',
         });
 
         const result = await response.json();
@@ -148,10 +154,18 @@ export const Contact = () => {
       } catch (error) {
         console.error(`Error sending message (attempt ${attempt}):`, error);
         
+        let errorMessage = "Failed to send message. ";
+        if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+          errorMessage += "Network error or server connection reset. ";
+        }
+
         // Retry if we haven't exhausted attempts
         if (attempt < maxAttempts) {
-          await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3s before retry
-          return sendMessage(attempt + 1, maxAttempts);
+          const nextAttempt = attempt + 1;
+          const delay = 3000 * attempt; // Increasing delay: 3s, 6s
+          console.log(`Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return sendMessage(nextAttempt, maxAttempts);
         }
         
         // All attempts failed
@@ -160,7 +174,7 @@ export const Contact = () => {
         
         setStatus({
           success: false,
-          message: "Failed to send message after multiple attempts. The server may be overloaded. Please try again in a moment.",
+          message: errorMessage + "Please check your internet connection or try again in a minute.",
         });
       }
     };
