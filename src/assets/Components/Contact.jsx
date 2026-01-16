@@ -41,7 +41,7 @@ export const Contact = () => {
       const apiUrl =
         window.location.hostname === "localhost"
           ? "http://localhost:5000/contact"
-          : "https://portfolio-server-5soy.onrender.com/contact";
+          : "/contact";
 
       // Add a timeout to the fetch request
       const controller = new AbortController();

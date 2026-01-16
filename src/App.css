@@ -466,6 +466,11 @@ z-index: 0;
   width: 100%;
   height: 100px;
 }
+.contact h2 {
+  font-size: 45px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 .contact button{
   background: #121212;
   color: #fff;
@@ -538,10 +543,7 @@ z-index: 0;
   font-size: 14px;
   color: #888888;
   letter-spacing: 0.5px;
-  margin-top: 20px;
-
-
-
+  margin-top: 40px;
 }
 .footer .logo {
   display: inline-block;
@@ -587,6 +589,13 @@ z-index: 0;
   .project .nav.nav-pills {
     width: 100%;
   }
+  .contact h2 {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+  .footer .social-icon {
+    margin-top: 30px;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -601,6 +610,9 @@ z-index: 0;
   }
   .contact {
     padding: 40px 20px;
+  }
+  .contact h2 {
+    font-size: 28px;
   }
 }
 
