@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 // Email configuration for Brevo (formerly Sendinblue)
 const contactEmail = createTransport({
     host: "smtp-relay.brevo.com",
-    port: 587,
+    port: 2525,
     secure: false, // true for 465, false for other ports
     auth: {
         user: process.env.EMAIL_USER,
