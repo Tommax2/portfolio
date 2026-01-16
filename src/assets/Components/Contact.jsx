@@ -39,13 +39,19 @@ export const Contact = () => {
           ? "http://localhost:5000/contact"
           : "https://portfolio-server-5soy.onrender.com/contact";
 
+      // Add a timeout to the fetch request
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formDetails),
+        signal: controller.signal,
       });
+      clearTimeout(id);
 
       setButtonText("Send");
 
@@ -62,10 +68,17 @@ export const Contact = () => {
     } catch (error) {
       console.error("Fetch error:", error);
       setButtonText("Send");
-      setStatus({
-        success: false,
-        message: "Connection failed. Is the backend server running?",
-      });
+      if (error.name === 'AbortError') {
+        setStatus({
+          success: false,
+          message: "Request timed out. The server might be waking up (Render free tier). Please try again in a minute.",
+        });
+      } else {
+        setStatus({
+          success: false,
+          message: "Connection failed. Please ensure the backend server is running and accessible.",
+        });
+      }
     }
   };
   return (
