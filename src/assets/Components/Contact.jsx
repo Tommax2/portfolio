@@ -55,16 +55,16 @@ export const Contact = () => {
     setButtonText("Sending...");
     setIsSending(true);
 
-    const sendRequest = async (retries = 1) => {
+    const sendRequest = async (attempt = 1, maxAttempts = 3) => {
       try {
         const apiUrl =
           window.location.hostname === "localhost"
             ? "http://localhost:5000/contact"
             : "/contact";
 
-        // Add a timeout to the fetch request
+        // Reduce timeout to 30 seconds (more realistic for most hosting)
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort("Timeout"), 60000); // 60 seconds timeout
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
 
         const response = await fetch(apiUrl, {
           method: "POST",
@@ -91,27 +91,30 @@ export const Contact = () => {
           });
         }
       } catch (error) {
-        console.error(`Fetch error (attempt ${2 - retries}):`, error);
+        console.error(`Fetch error (attempt ${attempt}/${maxAttempts}):`, error);
         
-        if ((error.name === 'AbortError' || error === 'Timeout') && retries > 0) {
-          setButtonText("Retrying...");
-          // Wait 2 seconds before retrying
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          return sendRequest(retries - 1);
+        // Check if we should retry
+        if (attempt < maxAttempts) {
+          setButtonText(`Retrying (${attempt}/${maxAttempts})...`);
+          // Wait before retrying (exponential backoff: 2s, 4s, 8s...)
+          const waitTime = Math.min(2000 * Math.pow(2, attempt - 1), 8000);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
+          return sendRequest(attempt + 1, maxAttempts);
         }
 
+        // All retries exhausted
         setButtonText("Send");
         setIsSending(false);
         
-        if (error.name === 'AbortError' || error === 'Timeout') {
+        if (error.name === 'AbortError') {
           setStatus({
             success: false,
-            message: "Request timed out. The server might be waking up (Render free tier). Please try again in a minute.",
+            message: "Request timed out after multiple attempts. The server (Render free tier) might be waking up. Please wait 30 seconds and try again.",
           });
         } else {
           setStatus({
             success: false,
-            message: "Connection failed. Please ensure the backend server is running and accessible.",
+            message: "Connection failed after multiple attempts. Please check your internet connection or try again later.",
           });
         }
       }
