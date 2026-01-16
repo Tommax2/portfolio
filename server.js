@@ -33,37 +33,21 @@ app.get("/", (req, res) => {
 
 // Email configuration
 const contactEmail = createTransport({
-    host: "smtp.gmail.com",
-    port: 587, // Changed from 465
-    secure: false, // Changed from true - use STARTTLS
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS // Must be Gmail App Password
-    },
-    tls: {
-        ciphers: 'SSLv3',
-        rejectUnauthorized: false
-    },
-    connectionTimeout: 30000, // Increased from 10000
-    greetingTimeout: 30000,
-    socketTimeout: 30000,
-    pool: true, // Use pooled connections
-    maxConnections: 1,
-    rateDelta: 1000,
-    rateLimit: 1
+        pass: process.env.EMAIL_PASS
+    }
 });
 
-// Non-blocking email verification
-setTimeout(() => {
-    contactEmail.verify((error) => {
-        if (error) {
-            console.error("⚠️ Email verification failed:", error.message);
-            console.log("Email may still work when sending actual messages");
-        } else {
-            console.log("✓ Nodemailer is ready to send emails");
-        }
-    });
-}, 2000);
+// Email verification
+contactEmail.verify((error) => {
+    if (error) {
+        console.error("⚠️ Email verification failed:", error.message);
+    } else {
+        console.log("✓ Nodemailer is ready to send emails");
+    }
+});
 
 // Contact form endpoint
 app.post("/contact", (req, res) => {
