@@ -87,10 +87,6 @@ export const Contact = () => {
       pollCount++;
       const elapsed = Math.floor((Date.now() - startTime) / 1000);
       setButtonText(`Waking server... ${elapsed}s`);
-      setStatus({
-        success: null,
-        message: `Checking server status... (attempt ${pollCount})`
-      });
       
       serverReady = await checkServerReady();
       
@@ -113,10 +109,6 @@ export const Contact = () => {
     const sendMessage = async (attempt = 1, maxAttempts = 3) => {
       try {
         setButtonText(`Sending... (${attempt}/${maxAttempts})`);
-        setStatus({
-          success: null,
-          message: `Sending your message... (attempt ${attempt})`
-        });
 
         // Use absolute URL for production to help with protocol stability
         const apiUrl =
