@@ -30,14 +30,19 @@ app.get("/", (req, res) => {
 
 // Email configuration
 const contactEmail = createTransport({
-    service: 'gmail',
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
         user: "martinsolumi@gmail.com",
         pass: "pkgb hzlc dgkp kpzf"
     },
     tls: {
         rejectUnauthorized: false
-    }
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,
+    socketTimeout: 10000
 });
 
 contactEmail.verify((error) => {
