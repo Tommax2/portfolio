@@ -40,6 +40,26 @@ export const Contact = () => {
     });
   };
 
+  // Check if server is ready with short timeout
+  const checkServerReady = async () => {
+    try {
+      const apiUrl =
+        window.location.hostname === "localhost"
+          ? "http://localhost:5000/ping"
+          : "/ping";
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second check
+      
+      const response = await fetch(apiUrl, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,75 +72,93 @@ export const Contact = () => {
       return;
     }
 
-    setButtonText("Sending...");
+    setButtonText("Checking server...");
     setIsSending(true);
+    setStatus({});
 
-    const sendRequest = async (attempt = 1, maxAttempts = 3) => {
-      try {
-        const apiUrl =
-          window.location.hostname === "localhost"
-            ? "http://localhost:5000/contact"
-            : "/contact";
+    // Poll server until it's ready (max 2 minutes)
+    const maxPollingTime = 120000; // 2 minutes
+    const pollInterval = 5000; // Check every 5 seconds
+    const startTime = Date.now();
+    let serverReady = false;
+    let pollCount = 0;
 
-        // Reduce timeout to 30 seconds (more realistic for most hosting)
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000);
-
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formDetails),
-          signal: controller.signal,
-        });
-        clearTimeout(timeoutId);
-
-        const result = await response.json();
-        
-        setButtonText("Send");
-        setIsSending(false);
-
-        if (response.ok) {
-          setFormDetails(FormInitialDetails);
-          setStatus({ success: true, message: "Message sent successfully!" });
-        } else {
-          setStatus({
-            success: false,
-            message: result.message || "Server error. Please try again later.",
-          });
-        }
-      } catch (error) {
-        console.error(`Fetch error (attempt ${attempt}/${maxAttempts}):`, error);
-        
-        // Check if we should retry
-        if (attempt < maxAttempts) {
-          setButtonText(`Retrying (${attempt}/${maxAttempts})...`);
-          // Wait before retrying (exponential backoff: 2s, 4s, 8s...)
-          const waitTime = Math.min(2000 * Math.pow(2, attempt - 1), 8000);
-          await new Promise(resolve => setTimeout(resolve, waitTime));
-          return sendRequest(attempt + 1, maxAttempts);
-        }
-
-        // All retries exhausted
-        setButtonText("Send");
-        setIsSending(false);
-        
-        if (error.name === 'AbortError') {
-          setStatus({
-            success: false,
-            message: "Request timed out after multiple attempts. The server (Render free tier) might be waking up. Please wait 30 seconds and try again.",
-          });
-        } else {
-          setStatus({
-            success: false,
-            message: "Connection failed after multiple attempts. Please check your internet connection or try again later.",
-          });
-        }
+    while (Date.now() - startTime < maxPollingTime && !serverReady) {
+      pollCount++;
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      setButtonText(`Waking server... ${elapsed}s`);
+      setStatus({
+        success: null,
+        message: `Checking server status... (attempt ${pollCount})`
+      });
+      
+      serverReady = await checkServerReady();
+      
+      if (!serverReady && Date.now() - startTime < maxPollingTime) {
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
       }
-    };
+    }
 
-    await sendRequest();
+    if (!serverReady) {
+      setButtonText("Send");
+      setIsSending(false);
+      setStatus({
+        success: false,
+        message: "Server is taking too long to wake up. Please try again in a minute. (Render free tier needs time to start)",
+      });
+      return;
+    }
+
+    // Server is ready, now send the actual message
+    setButtonText("Sending message...");
+    setStatus({
+      success: null,
+      message: "Server is ready, sending your message..."
+    });
+
+    try {
+      const apiUrl =
+        window.location.hostname === "localhost"
+          ? "http://localhost:5000/contact"
+          : "/contact";
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout for actual send
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDetails),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      const result = await response.json();
+      
+      setButtonText("Send");
+      setIsSending(false);
+
+      if (response.ok) {
+        setFormDetails(FormInitialDetails);
+        setStatus({ success: true, message: "Message sent successfully!" });
+      } else {
+        setStatus({
+          success: false,
+          message: result.message || "Server error. Please try again later.",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setButtonText("Send");
+      setIsSending(false);
+      
+      setStatus({
+        success: false,
+        message: "Failed to send message. Please try again.",
+      });
+    }
   };
 
   return (
@@ -215,7 +253,9 @@ export const Contact = () => {
                     <Col md={12}>
                       <p
                         className={
-                          status.success === false ? "danger" : "success"
+                          status.success === false ? "danger" : 
+                          status.success === true ? "success" : 
+                          "info"
                         }
                       >
                         {status.message}
