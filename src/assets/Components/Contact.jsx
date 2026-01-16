@@ -110,55 +110,67 @@ export const Contact = () => {
     }
 
     // Server is ready, now send the actual message
-    setButtonText("Sending message...");
-    setStatus({
-      success: null,
-      message: "Server is ready, sending your message..."
-    });
+    const sendMessage = async (attempt = 1, maxAttempts = 3) => {
+      try {
+        setButtonText(`Sending... (${attempt}/${maxAttempts})`);
+        setStatus({
+          success: null,
+          message: `Sending your message... (attempt ${attempt})`
+        });
 
-    try {
-      const apiUrl =
-        window.location.hostname === "localhost"
-          ? "http://localhost:5000/contact"
-          : "/contact";
+        const apiUrl =
+          window.location.hostname === "localhost"
+            ? "http://localhost:5000/contact"
+            : "/contact";
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout for actual send
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDetails),
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDetails),
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
 
-      const result = await response.json();
-      
-      setButtonText("Send");
-      setIsSending(false);
+        const result = await response.json();
+        
+        setButtonText("Send");
+        setIsSending(false);
 
-      if (response.ok) {
-        setFormDetails(FormInitialDetails);
-        setStatus({ success: true, message: "Message sent successfully!" });
-      } else {
+        if (response.ok) {
+          setFormDetails(FormInitialDetails);
+          setStatus({ success: true, message: "Message sent successfully!" });
+        } else {
+          setStatus({
+            success: false,
+            message: result.message || "Server error. Please try again later.",
+          });
+        }
+      } catch (error) {
+        console.error(`Error sending message (attempt ${attempt}):`, error);
+        
+        // Retry if we haven't exhausted attempts
+        if (attempt < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3s before retry
+          return sendMessage(attempt + 1, maxAttempts);
+        }
+        
+        // All attempts failed
+        setButtonText("Send");
+        setIsSending(false);
+        
         setStatus({
           success: false,
-          message: result.message || "Server error. Please try again later.",
+          message: "Failed to send message after multiple attempts. The server may be overloaded. Please try again in a moment.",
         });
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setButtonText("Send");
-      setIsSending(false);
-      
-      setStatus({
-        success: false,
-        message: "Failed to send message. Please try again.",
-      });
-    }
+    };
+
+    await sendMessage();
   };
 
   return (
