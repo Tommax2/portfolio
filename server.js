@@ -18,6 +18,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "dist")));
 
+// Health check endpoint to wake up the server
+app.get("/ping", (req, res) => {
+    res.json({ status: "ok", message: "Server is awake" });
+});
+
 // Root endpoint
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));

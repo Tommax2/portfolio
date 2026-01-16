@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../img/contact.jpeg";
 import { motion } from "framer-motion";
@@ -15,6 +15,23 @@ export const Contact = () => {
   const [buttonText, setButtonText] = useState("Send");
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState({});
+
+  // Wake up the server when the component mounts
+  useEffect(() => {
+    const wakeUpServer = async () => {
+      try {
+        const apiUrl =
+          window.location.hostname === "localhost"
+            ? "http://localhost:5000/ping"
+            : "/ping";
+        await fetch(apiUrl);
+        console.log("Server wake-up ping sent");
+      } catch (err) {
+        console.log("Server wake-up ping failed (expected if server is down)");
+      }
+    };
+    wakeUpServer();
+  }, []);
 
   const onFormUpdate = (category, value) => {
     setFormDetails({
@@ -37,56 +54,70 @@ export const Contact = () => {
 
     setButtonText("Sending...");
     setIsSending(true);
-    try {
-      const apiUrl =
-        window.location.hostname === "localhost"
-          ? "http://localhost:5000/contact"
-          : "/contact";
 
-      // Add a timeout to the fetch request
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort("Timeout"), 60000); // 60 seconds timeout
+    const sendRequest = async (retries = 1) => {
+      try {
+        const apiUrl =
+          window.location.hostname === "localhost"
+            ? "http://localhost:5000/contact"
+            : "/contact";
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDetails),
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
+        // Add a timeout to the fetch request
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort("Timeout"), 60000); // 60 seconds timeout
 
-      setButtonText("Send");
-      setIsSending(false);
-
-      const result = await response.json();
-      if (response.ok) {
-        setFormDetails(FormInitialDetails);
-        setStatus({ success: true, message: "Message sent successfully!" });
-      } else {
-        setStatus({
-          success: false,
-          message: result.message || "Server error. Please try again later.",
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDetails),
+          signal: controller.signal,
         });
+        clearTimeout(timeoutId);
+
+        const result = await response.json();
+        
+        setButtonText("Send");
+        setIsSending(false);
+
+        if (response.ok) {
+          setFormDetails(FormInitialDetails);
+          setStatus({ success: true, message: "Message sent successfully!" });
+        } else {
+          setStatus({
+            success: false,
+            message: result.message || "Server error. Please try again later.",
+          });
+        }
+      } catch (error) {
+        console.error(`Fetch error (attempt ${2 - retries}):`, error);
+        
+        if ((error.name === 'AbortError' || error === 'Timeout') && retries > 0) {
+          setButtonText("Retrying...");
+          // Wait 2 seconds before retrying
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          return sendRequest(retries - 1);
+        }
+
+        setButtonText("Send");
+        setIsSending(false);
+        
+        if (error.name === 'AbortError' || error === 'Timeout') {
+          setStatus({
+            success: false,
+            message: "Request timed out. The server might be waking up (Render free tier). Please try again in a minute.",
+          });
+        } else {
+          setStatus({
+            success: false,
+            message: "Connection failed. Please ensure the backend server is running and accessible.",
+          });
+        }
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
-      setButtonText("Send");
-      setIsSending(false);
-      
-      if (error.name === 'AbortError' || error === 'Timeout') {
-        setStatus({
-          success: false,
-          message: "Request timed out. The server might be waking up (Render free tier). Please try again in a minute.",
-        });
-      } else {
-        setStatus({
-          success: false,
-          message: "Connection failed. Please ensure the backend server is running and accessible.",
-        });
-      }
-    }
+    };
+
+    await sendRequest();
   };
 
   return (
