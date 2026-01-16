@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaGithub, FaLinkedin, FaWhatsapp, FaFacebook } from 'react-icons/fa';
+import logo from "../img/logo.jpeg";
 
 export const NavBar = () =>{
     const [activeLink, setActiveLink] = useState('home');
@@ -27,7 +28,7 @@ export const NavBar = () =>{
         <Navbar expand="lg" className={scrolled ? 'scrolled':"" }>
         <Container>
           <Navbar.Brand href="#home">
-            <span className='logo'>TOMMAX</span>
+            <img src={logo} alt="Logo" className="logo-img" style={{ width: '50px', borderRadius: '50%' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           
