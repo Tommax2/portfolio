@@ -46,7 +46,7 @@ export const NavBar = () =>{
                     <a href="https://wa.me/2348110736175"><FaWhatsapp color="white" size={20} /></a>
                     <a href="#"><FaFacebook color="white" size={20} /></a>
                 </div>
-                <button className='vvd' onClick={() => console.log('connect')}><span>Let's connect</span></button>
+                <button className='vvd' onClick={() => window.location.href = 'https://wa.me/2348110736175'}><span>Let's connect</span></button>
             </span>
            
           </Navbar.Collapse>

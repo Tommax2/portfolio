@@ -58,7 +58,7 @@ export const Banner = () => {
                             <span className="tagline">Welcome to my portfolio</span>
                             <h1>{'Hi, I`m Martins'} <span className="wrap">{text}</span></h1>
                             <p>I am a dedicated    Developer with a passion for building innovative digital solutions. With expertise in modern web technologies, I transform complex ideas into elegant, user-centric applications. Explore my work and let's build something amazing together.</p>
-                            <button onClick={() => console.log('connect')}>
+                            <button onClick={() => window.location.href = 'https://wa.me/2348110736175'}>
                                 let's connect <ArrowRightCircle size={25} />
                             </button>
                         </motion.div>
