@@ -7,7 +7,7 @@ import  House  from "../img/house3.jpg";
 import Jais from "../img/logo.jpeg";
 import camera3 from "../img/camera3.jpg";
 import Machine from "../img/machine.jpeg";
-import background from "../img/background.jpg";
+import background from "../img/background-optimized.jpg";
 import Books from "../img/kids-books.jpg"
 
 export const Projects = () => {
@@ -26,7 +26,7 @@ export const Projects = () => {
     },
     {
       title: "Everythingbybecky",
-      description: "an e-commerce online store for selling nairs and other beauty products.",
+      description: "an e-commerce online store for selling nails and other beauty products.",
       imgUrl: background,
       url: "https://everythingbybecky.onrender.com",
     },
