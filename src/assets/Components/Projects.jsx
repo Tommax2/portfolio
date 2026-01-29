@@ -13,19 +13,19 @@ import Books from "../img/kids-books.jpg"
 export const Projects = () => {
   const projects = [
     {
-      title: "TheTransformedmeacdamy",
+      title: "TheTransformedMeAcademy",
       description: "an e-commerce online store for selling books and get them delivered to your doorstep quickly.",
       imgUrl: Books,
       url: "https://thetransformedmeacademy.com",
     },
     {
-      title: "jaistechworld",
-      description: "a  portfolio website showcasing projects and skills about the company.",
+      title: "JaisTechworld",
+      description: "a portfolio website showcasing projects and skills about the company.",
       imgUrl: Jais,
       url: "https://jaistechworld.com",
     },
     {
-      title: "Everythingbybecky",
+      title: "EverythingByBecky",
       description: "an e-commerce online store for selling nails and other beauty products.",
       imgUrl: background,
       url: "https://everythingbybecky.onrender.com",
