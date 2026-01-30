@@ -14,19 +14,25 @@ export const Projects = () => {
   const projects = [
     {
       title: "TheTransformedMeAcademy",
-      description: "an e-commerce online store for selling books and get them delivered to your doorstep quickly.",
+      description: "A full e-commerce online store for selling books, featuring product categories, a shopping cart, fast delivery, and a mobile-responsive design.",
+      techStack: "React, Node.js, Express, MongoDB, Stripe, Redux",
+      cta: "WhatsApp me",
       imgUrl: Books,
       url: "https://thetransformedmeacademy.com",
     },
     {
       title: "JaisTechworld",
-      description: "a portfolio website showcasing projects and skills about the company.",
+      description: "A personal portfolio website showcasing projects and skills, built with a focus on modern web development practices and responsive design.",
+      techStack: "React, JavaScript, HTML, CSS, Bootstrap, Framer Motion",
+      cta: "Open for projects",
       imgUrl: Jais,
       url: "https://jaistechworld.com",
     },
     {
       title: "EverythingByBecky",
-      description: "an e-commerce online store for selling nails and other beauty products.",
+      description: "A full e-commerce online store for selling nails and other beauty products, complete with product categorization, a secure checkout process, and a mobile-first approach.",
+      techStack: "React, Node.js, Express, MongoDB, PayPal, Redux",
+      cta: "WhatsApp me",
       imgUrl: background,
       url: "https://everythingbybecky.onrender.com",
     },

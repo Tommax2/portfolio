@@ -10,7 +10,7 @@ const cardVariants = {
   }
 };
 
-export const ProjectCards = ({ title, description, imgUrl, url }) => {
+export const ProjectCards = ({ title, description, imgUrl, url, techStack, cta }) => {
   return (
     <Col sm={6} md={4}>
       <motion.div
@@ -25,7 +25,19 @@ export const ProjectCards = ({ title, description, imgUrl, url }) => {
         <div className="proj-txtx">
           <h4>{title}</h4>
           <p>{description}</p>
+          {techStack && <p className="tech-stack"><strong>Tech Stack:</strong> {techStack}</p>}
           <a href={url} target="_blank" rel="noreferrer" className="view-project-link">View Project</a>
+          {cta && (
+            cta === "WhatsApp me" ? (
+              <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" rel="noreferrer" className="cta-link whatsapp-link">
+                {cta}
+              </a>
+            ) : (
+              <a href={url} target="_blank" rel="noreferrer" className="cta-link">
+                {cta}
+              </a>
+            )
+          )}
         </div>
       </motion.div>
     </Col>

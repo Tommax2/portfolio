@@ -430,6 +430,40 @@ z-index: 0;
   background-color: #121212;
   color: #fff !important;
 }
+
+.tech-stack {
+  font-size: 14px;
+  color: #cccccc;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.cta-link {
+  display: inline-block;
+  padding: 10px 25px;
+  margin-top: 15px;
+  background: linear-gradient(90.21deg, #aa367c -5.91%, #4a2fbd 111.58%);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-link {
+  background: #25d366; /* WhatsApp green */
+}
+
+.whatsapp-link:hover {
+  background: #1da851;
+}
 /*contact*/
 .contact{
   position: relative;
